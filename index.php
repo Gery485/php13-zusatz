@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benutzerdaten anzeigen</title>
-    <link rel="stylesheet" href="style.css"> <!-- Optional: Falls du CSS hinzufügen möchtest -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/index.js" defer></script>
     <style>
@@ -55,8 +54,16 @@
     <!-- Daten werden hier dynamisch geladen -->
     </tbody>
 </table>
+
 <?php
 require_once 'userdata.php';
 ?>
+
+<script>
+$(document).ready(function() {
+    loadData();
+});
+</script>
+
 </body>
 </html>

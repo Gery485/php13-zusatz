@@ -1,13 +1,14 @@
 <?php
-require_once 'db.data.php';
+require_once 'userdata.php';
 
 header('Content-Type: application/json');
 
-if (isset($_GET['search'])) {
-    $searchTerm = $_GET['search'];
-    $data = getFilteredData($searchTerm);
-} else {
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+
+if (empty($searchTerm)) {
     $data = getAllData();
+} else {
+    $data = getFilteredData($searchTerm);
 }
 
 echo json_encode($data);

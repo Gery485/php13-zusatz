@@ -1,3 +1,4 @@
+<?php
 $data = [[
     "id" => 1,
     "firstname" => "Hamnet",
@@ -799,3 +800,31 @@ $data = [[
     "birthdate" => "1991-07-06",
     "street" => "Rusk"
 ]];
+
+function getAllData()
+{
+    global $data;
+    return $data;
+}
+
+function getFilteredData($filter) {
+    global $data;
+    $filter = strtolower($filter);
+    
+    return array_filter($data, function($user) use ($filter) {
+        return strpos(strtolower($user['firstname']), $filter) !== false
+            || strpos(strtolower($user['lastname']), $filter) !== false
+            || strpos(strtolower($user['email']), $filter) !== false;
+    });
+}
+
+function getDataPerId($id) {
+    global $data;
+    foreach ($data as $user) {
+        if ($user['id'] == $id) {
+            return $user;
+        }
+    }
+    return null; // Benutzer nicht gefunden
+}
+?>

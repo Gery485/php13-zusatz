@@ -1,6 +1,6 @@
 $(document).ready(function() {
     loadData();
-    initialize();
+    initializeSearch();
 });
 
 function loadData() {
@@ -18,7 +18,7 @@ function loadData() {
 }
 
 function displayData(data) {
-    var tbody = $('.users tbody');
+    var tbody = $('#userTable tbody');
     tbody.empty();
 
     data.forEach(function(user) {
@@ -30,34 +30,22 @@ function displayData(data) {
     });
 }
 
-function initialize() {
-    document.getElementById("filter").onkeyup = filterRows;
+function initializeSearch() {
+    $('#search').on('keyup', function() {
+        var searchTerm = $(this).val().toLowerCase();
+        $('#userTable tbody tr').each(function() {
+            var text = $(this).text().toLowerCase();
+            $(this).toggle(text.indexOf(searchTerm) > -1);
+        });
+    });
 }
 
-function filterRows() {
-    var filter = document.getElementById("filter").value.toLowerCase();
+function searchData() {
+    var searchTerm = $('#search').val();
+    loadData(searchTerm);
+}
 
-    if (filter == "") {
-        $('.users tr').each(function (i, row) {
-            if (i > 0) {
-                $(row).show();
-            }
-        });
-    } else {
-        $('.users tr').each(function (i, row) {
-            // ignore header row
-            if (i > 0) {
-                var $row = $(row);  // convert to object
-
-                var name = $row.find('td:nth-child(1)').text().toLowerCase();
-                var email = $row.find('td:nth-child(2)').text().toLowerCase();
-
-                if (name.indexOf(filter) >= 0 || email.indexOf(filter) >= 0) {
-                    $row.show();
-                } else {
-                    $row.hide();
-                }
-            }
-        });
-    }
+function clearSearch() {
+    $('#search').val('');
+    loadData();
 }
