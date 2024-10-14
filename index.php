@@ -55,6 +55,8 @@
     <!-- Daten werden hier dynamisch geladen -->
     </tbody>
 </table>
-
+<?php
+require_once 'userdata.php';
+?>
 </body>
 </html>

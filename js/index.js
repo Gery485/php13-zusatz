@@ -1,3 +1,35 @@
+$(document).ready(function() {
+    loadData();
+    initialize();
+});
+
+function loadData() {
+    $.ajax({
+        url: 'get_data.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            displayData(data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+}
+
+function displayData(data) {
+    var tbody = $('.users tbody');
+    tbody.empty();
+
+    data.forEach(function(user) {
+        var row = $('<tr>');
+        row.append($('<td>').text(user.firstname + ' ' + user.lastname));
+        row.append($('<td>').text(user.email));
+        row.append($('<td>').text(user.birthdate));
+        tbody.append(row);
+    });
+}
+
 function initialize() {
     document.getElementById("filter").onkeyup = filterRows;
 }
