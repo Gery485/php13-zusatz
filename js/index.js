@@ -1,12 +1,13 @@
 $(document).ready(function() {
     loadData();
-    initializeSearch();
+    initializeButtons();
 });
 
-function loadData() {
+function loadData(searchTerm = '') {
     $.ajax({
         url: 'get_data.php',
         method: 'GET',
+        data: { search: searchTerm },
         dataType: 'json',
         success: function(data) {
             displayData(data);
@@ -21,23 +22,28 @@ function displayData(data) {
     var tbody = $('#userTable tbody');
     tbody.empty();
 
+    if (data.length === 0) {
+        tbody.append('<tr><td colspan="3">Keine Daten gefunden</td></tr>');
+        return;
+    }
+
     data.forEach(function(user) {
         var row = $('<tr>');
         row.append($('<td>').text(user.firstname + ' ' + user.lastname));
         row.append($('<td>').text(user.email));
-        row.append($('<td>').text(user.birthdate));
+        row.append($('<td>').text(formatDate(user.birthdate)));
         tbody.append(row);
     });
 }
 
-function initializeSearch() {
-    $('#search').on('keyup', function() {
-        var searchTerm = $(this).val().toLowerCase();
-        $('#userTable tbody tr').each(function() {
-            var text = $(this).text().toLowerCase();
-            $(this).toggle(text.indexOf(searchTerm) > -1);
-        });
-    });
+function formatDate(dateString) {
+    var date = new Date(dateString);
+    return date.toLocaleDateString('de-DE');
+}
+
+function initializeButtons() {
+    $('#searchButton').on('click', searchData);
+    $('#clearButton').on('click', clearSearch);
 }
 
 function searchData() {

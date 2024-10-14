@@ -38,8 +38,8 @@
 <div>
     <label for="search">Suche:</label>
     <input type="text" id="search" placeholder="Suche nach Name, E-Mail">
-    <button onclick="searchData()">Suchen</button>
-    <button onclick="clearSearch()">Leeren</button>
+    <button id="searchButton">Suchen</button>
+    <button id="clearButton">Leeren</button>
 </div>
 
 <table id="userTable">
@@ -58,12 +58,6 @@
 <?php
 require_once 'userdata.php';
 ?>
-
-<script>
-$(document).ready(function() {
-    loadData();
-});
-</script>
 
 </body>
 </html>
